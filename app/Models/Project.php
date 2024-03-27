@@ -24,4 +24,9 @@ class Project extends Model
     {
         return asset('storage/' . $this->image);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

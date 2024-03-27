@@ -14,6 +14,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Slug</th>
+                <th scope="col">Categoria</th>
                 <th scope="col">Crato il</th>
                 <th scope="col">Ultima Modifica</th>
                 <th>
@@ -30,6 +31,7 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->slug }}</td>
+                    <td>{{ $project->category ? $project->category->laber : '-' }}</td>
                     <td>{{ $project->getFormattedDate('created_at') }}</td>
                     <td>{{ $project->getFormattedDate('updated_at') }}</td>
                     <td>
@@ -53,7 +55,7 @@
 
             @empty
                 <tr>
-                    <td colspan="6">
+                    <td colspan="8">
                         <h3 class="text-center">Non ci sono progetti</h3>
                     </td>
                 </tr>

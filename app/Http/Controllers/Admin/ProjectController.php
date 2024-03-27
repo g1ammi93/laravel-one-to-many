@@ -58,7 +58,7 @@ class ProjectController extends Controller
 
         if (Arr::exists($data, 'image')) {
             $extencion = $data['image']->extension();
-            $img_url = Storage::putFile('project_images', $data['image'], "$project->slug.$extencion");
+            $img_url = Storage::putFileAs('project_images', $data['image'], "$project->slug.$extencion");
             $project->image = $img_url;
         }
 
