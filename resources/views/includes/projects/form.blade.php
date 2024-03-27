@@ -13,8 +13,9 @@
                 class="form-control @error('title') is-invalid @elseif(old('title', '')) is-valid @enderror"
                 id="title" name="title" placeholder="Titolo..." value="{{ old('title', $project->title) }}">
             @error('title')
-                <div class="invalid-feedback"></div>
-                {{ $message }}
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
             @else
                 <div class="form-text">
                     Inserisci il titolo del Progetto
@@ -31,8 +32,9 @@
                     {{ old('desription', $project->description) }}
                 </textarea>
             @error('description')
-                <div class="invalid-feedback"></div>
-                {{ $message }}
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
             @else
                 <div class="form-text">
                     Inserisci la descrizione del Progetto
@@ -41,7 +43,25 @@
             @enderror
         </div>
     </div>
-    <div class="col-11">
+    <div class="col-6">
+        <div class="mb-3">
+            <label for="category_id" class="form-label">Seleziona Categoria</label>
+            <select name="category_id" id="category_id"
+                class="form-select @error('category_id') is-invalid @elseif(old('category_id', '')) is-valid @enderror">
+                <option value="">Nessuna</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" @if (old('category_id', $project->$category?->id) == $category->id) selected @endif>
+                        {{ $category->label }}</option>
+                @endforeach
+            </select>
+            @error('category_id')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+    </div>
+    <div class="col-5">
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
             <input type="file"

@@ -5,7 +5,15 @@
 @section('content')
 
     <header>
-        <h1 class="my-5"> {{ $project->title }}</h1>
+        <h1 class="mt-4 mb-1"> {{ $project->title }}</h1>
+        <p>Categoria: @if ($project->category)
+                <span class="badge rounded-pill" style="background-color: {{ $project->category->color }}">
+                    {{ $project->category->label }}
+                </span>
+            @else
+                Nessuna
+            @endif
+        </p>
     </header>
 
 

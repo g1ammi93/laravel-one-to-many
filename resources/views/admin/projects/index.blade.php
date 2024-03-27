@@ -31,7 +31,15 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->slug }}</td>
-                    <td>{{ $project->category ? $project->category->laber : '-' }}</td>
+                    <td>
+                        @if ($project->category)
+                            <span class="badge rounded-pill" style="background-color: {{ $project->category->color }}">
+                                {{ $project->category->label }}
+                            </span>
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td>{{ $project->getFormattedDate('created_at') }}</td>
                     <td>{{ $project->getFormattedDate('updated_at') }}</td>
                     <td>

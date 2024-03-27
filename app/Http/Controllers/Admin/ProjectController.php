@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -27,7 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         $project = new Project();
-        return view('admin.projects.create', compact('project'));
+        $categories = Category::select('label', 'id')->get();
+        return view('admin.projects.create', compact('project', 'categories'));
     }
 
     /**
@@ -40,12 +42,14 @@ class ProjectController extends Controller
             'title' => 'required|string|unique:projects',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'category_id' => 'nullable|exists:categories,id',
         ], [
             'title.required' => 'Il titolo è obbligatorio',
             'description.required' => 'La descrizione è obbligatoria',
             'title.unique' => 'Non possono esistere due progetti con lo stesso nome',
             'image.image' => 'Il file inserito non è un immagine',
             'image.mimes' => 'Le estensione valide sono: .png, .jpg e .jpeg',
+            'category_id.exists' => 'Categoria non valida o non esistente',
         ]);
 
         $data = $request->all();
@@ -80,7 +84,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $categories = Category::select('label', 'id')->get();
+        return view('admin.projects.edit', compact('project', 'categories'));
     }
 
     /**
@@ -93,12 +98,14 @@ class ProjectController extends Controller
             'title' => ['required', 'string', Rule::unique('projects')->ignore($project->id)],
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'category_id' => 'nullable|exists:categories,id',
         ], [
             'title.required' => 'Il titolo è obbligatorio',
             'description.required' => 'La descrizione è obbligatoria',
             'title.unique' => 'Non possono esistere due progetti con lo stesso nome',
             'image.image' => 'Il file inserito non è un immagine',
             'image.mimes' => 'Le estensione valide sono: .png, .jpg e .jpeg',
+            'category_id.exists' => 'Categoria non valida o non esistente',
         ]);
 
         $data = $request->all();
